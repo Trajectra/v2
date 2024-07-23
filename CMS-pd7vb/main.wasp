@@ -1,0 +1,96 @@
+app CMS {
+  wasp: {
+    version: "^0.14.0"
+  },
+  title: "CMS",
+  client: {
+    rootComponent: import { Layout } from "@src/Layout.jsx"
+  },
+  auth: {
+    userEntity: User,
+    methods: {
+      usernameAndPassword: {}
+    },
+    onAuthFailedRedirectTo: "/login",
+    onAuthSucceededRedirectTo: "/"
+  },
+}
+
+route LoginRoute { path: "/login", to: LoginPage }
+page LoginPage {
+  component: import Login from "@src/pages/auth/Login.jsx"
+}
+route SignupRoute { path: "/signup", to: SignupPage }
+page SignupPage {
+  component: import Signup from "@src/pages/auth/Signup.jsx"
+}
+
+action createSchedule {
+  fn: import { createSchedule } from "@src/actions.js",
+  entities: [User, Schedule]
+}
+
+action markAttendance {
+  fn: import { markAttendance } from "@src/actions.js",
+  entities: [User, Attendance]
+}
+
+action payFee {
+  fn: import { payFee } from "@src/actions.js",
+  entities: [User, Fee]
+}
+
+action makeTransaction {
+  fn: import { makeTransaction } from "@src/actions.js",
+  entities: [User, Transaction]
+}
+
+query getSchedules {
+  fn: import { getSchedules } from "@src/queries.js",
+  entities: [User, Schedule]
+}
+
+query getAttendances {
+  fn: import { getAttendances } from "@src/queries.js",
+  entities: [User, Attendance]
+}
+
+query getFees {
+  fn: import { getFees } from "@src/queries.js",
+  entities: [User, Fee]
+}
+
+query getTransactions {
+  fn: import { getTransactions } from "@src/queries.js",
+  entities: [User, Transaction]
+}
+
+route DashboardRoute { path: "/", to: DashboardPage }
+page DashboardPage {
+  component: import DashboardPage from "@src/pages/Dashboard.jsx",
+  authRequired: true
+}
+
+route SchedulingRoute { path: "/scheduling", to: SchedulingPage }
+page SchedulingPage {
+  component: import SchedulingPage from "@src/pages/Scheduling.jsx",
+  authRequired: true
+}
+
+route AttendanceRoute { path: "/attendance", to: AttendancePage }
+page AttendancePage {
+  component: import AttendancePage from "@src/pages/Attendance.jsx",
+  authRequired: true
+}
+
+route FeesRoute { path: "/fees", to: FeesPage }
+page FeesPage {
+  component: import FeesPage from "@src/pages/Fees.jsx",
+  authRequired: true
+}
+
+route TransactionsRoute { path: "/transactions", to: TransactionsPage }
+page TransactionsPage {
+  component: import TransactionsPage from "@src/pages/Transactions.jsx",
+  authRequired: true
+}
